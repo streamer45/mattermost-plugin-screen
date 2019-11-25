@@ -1,76 +1,48 @@
-# Plugin Starter Template [![CircleCI branch](https://img.shields.io/circleci/project/github/mattermost/mattermost-plugin-starter-template/master.svg)](https://circleci.com/gh/mattermost/mattermost-plugin-starter-template)
+# Mattermost Screen Recording Plugin
 
-This plugin serves as a starting point for writing a Mattermost plugin. Feel free to base your own plugin off this repository.
+This plugin adds support for basic **screen recording** in Mattermost.
 
-To learn more about plugins, see [our plugin documentation](https://developers.mattermost.com/extend/plugins/).
+## Demo
 
-## Getting Started
-Use GitHub's template feature to make a copy of this repository by clicking the "Use this template" button then clone outside of `$GOPATH`.
-
-Alternatively shallow clone the repository to a directory outside of `$GOPATH` matching your plugin name:
-```
-git clone --depth 1 https://github.com/mattermost/mattermost-plugin-starter-template com.example.my-plugin
-```
-
-Note that this project uses [Go modules](https://github.com/golang/go/wiki/Modules). Be sure to locate the project outside of `$GOPATH`, or allow the use of Go modules within your `$GOPATH` with an `export GO111MODULE=on`.
-
-Edit `plugin.json` with your `id`, `name`, and `description`:
-```
-{
-    "id": "com.example.my-plugin",
-    "name": "My Plugin",
-    "description": "A plugin to enhance Mattermost."
-}
-```
-
-Build your plugin:
-```
-make
-```
-
-This will produce a single plugin file (with support for multiple architectures) for upload to your Mattermost server:
+A demo server running the latest version of this plugin is located [here](https://mm.krad.stream/testing/channels/town-square).
+You can login using the following details:
 
 ```
-dist/com.example.my-plugin.tar.gz
+Username: demo
+Password: password
 ```
 
-There is a build target to automate deploying and enabling the plugin to your server, but it requires configuration and [http](https://httpie.org/) to be installed:
+## Usage
+
+To capture your screen and send the recording click on the post attachment icon and click on *Screen recording*.
+
+## Installation
+
+1. Download the latest version from the [release page](https://github.com/streamer45/mattermost-plugin-screen/releases).
+2. Upload the file through **System Console > Plugins > Plugin Management**, or manually upload it to the Mattermost server under plugin directory. See [documentation](https://docs.mattermost.com/administration/plugins.html#set-up-guide) for more details.
+
+## Development
+
+Use ```make dist``` to build this plugin.
+
+Use `make deploy` to deploy the plugin to your local server.
+
+Before running `make deploy` you need to set a few environment variables:
+
 ```
 export MM_SERVICESETTINGS_SITEURL=http://localhost:8065
 export MM_ADMIN_USERNAME=admin
 export MM_ADMIN_PASSWORD=password
-make deploy
 ```
 
-Alternatively, if you are running your `mattermost-server` out of a sibling directory by the same name, use the `deploy` target alone to  unpack the files into the right directory. You will need to restart your server and manually enable your plugin.
+For more details on how to develop a plugin refer to the official [documentation](https://developers.mattermost.com/extend/plugins/).
 
-In production, deploy and upload your plugin via the [System Console](https://about.mattermost.com/default-plugin-uploads).
+## Limitations
 
-## Q&A
+Screen recording works on Chrome 72+ only.
 
-### How do I make a server-only or web app-only plugin?
+## License
 
-Simply delete the `server` or `webapp` folders and remove the corresponding sections from `plugin.json`. The build scripts will skip the missing portions automatically.
-
-### How do I include assets in the plugin bundle?
-
-Place them into the `assets` directory. To use an asset at runtime, build the path to your asset and open as a regular file:
-
-```go
-bundlePath, err := p.API.GetBundlePath()
-if err != nil {
-    return errors.Wrap(err, "failed to get bundle path")
-}
-
-profileImage, err := ioutil.ReadFile(filepath.Join(bundlePath, "assets", "profile_image.png"))
-if err != nil {
-    return errors.Wrap(err, "failed to read profile image")
-}
-
-if appErr := p.API.SetProfileImage(userID, profileImage); appErr != nil {
-    return errors.Wrap(err, "failed to set profile image")
-}
-```
-
-### How do I build the plugin with unminified JavaScript?
-Use `make debug-dist` and `make debug-deploy` in place of `make dist` and `make deploy` to configure webpack to generate unminified Javascript.
+[mattermost-plugin-screen](https://github.com/streamer45/mattermost-plugin-screen) is licensed under [Apache-2.0](LICENSE)  
+[mux.js](https://github.com/videojs/mux.js) is licensed under [Apache-2.0](https://github.com/videojs/mux.js/blob/master/LICENSE)
+[ebml-ts](https://github.com/legokichi/ts-ebml) is licensed under [MIT](https://opensource.org/licenses/MIT) 
