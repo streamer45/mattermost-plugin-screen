@@ -45,4 +45,4 @@ Screen recording works on Chrome 72+ only.
 
 [mattermost-plugin-screen](https://github.com/streamer45/mattermost-plugin-screen) is licensed under [Apache-2.0](LICENSE)   
 [mux.js](https://github.com/videojs/mux.js) is licensed under [Apache-2.0](https://github.com/videojs/mux.js/blob/master/LICENSE)  
-[ebml-ts](https://github.com/legokichi/ts-ebml) is licensed under [MIT](https://opensource.org/licenses/MIT)   
+[ts-ebml](https://github.com/legokichi/ts-ebml) is licensed under [MIT](https://opensource.org/licenses/MIT)   
