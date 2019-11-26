@@ -1,1 +1,8 @@
-{}
+{
+  "plugin.recording": "Screen recording",
+  "modal.stop": "Stop",
+  "modal.cancel": "Cancel",
+  "modal.upload": "Upload",
+  "modal.uploading": "Uploading...",
+  "modal.processing": "Processing..."
+}

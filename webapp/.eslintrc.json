@@ -354,7 +354,7 @@
     ],
     "no-undef-init": 2,
     "no-undefined": 2,
-    "no-underscore-dangle": 2,
+    "no-underscore-dangle": 0,
     "no-unexpected-multiline": 2,
     "no-unmodified-loop-condition": 2,
     "no-unneeded-ternary": [
@@ -526,7 +526,7 @@
     "react/no-danger-with-children": 2,
     "react/no-deprecated": 1,
     "react/no-did-mount-set-state": 2,
-    "react/no-did-update-set-state": 2,
+    "react/no-did-update-set-state": 0,
     "react/no-direct-mutation-state": 2,
     "react/no-find-dom-node": 1,
     "react/no-is-mounted": 2,
