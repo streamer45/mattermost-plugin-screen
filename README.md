@@ -39,7 +39,8 @@ For more details on how to develop a plugin refer to the official [documentation
 
 ## Limitations
 
-Screen recording works on Chrome 72+ only.
+- Webapp: screen recording works on Chrome 72+ only.
+- Desktop App: can only record full desktop.
 
 ## License
 
