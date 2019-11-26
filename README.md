@@ -2,6 +2,11 @@
 
 This plugin adds support for basic **screen recording** in Mattermost.
 
+## Why?
+
+- [GIF](https://en.wikipedia.org/wiki/GIF) format is great but it's not meant for screen recording. Video is the solution.
+- It can be very time consuming to find a program that captures your screen, configuring and running it. Your browser is the solution.
+
 ## Demo
 
 A demo server running the latest version of this plugin is located [here](https://mm.krad.stream/testing/channels/town-square).
