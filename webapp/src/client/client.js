@@ -9,6 +9,7 @@ export default class Client {
         this.timerId = null;
         this._onUpdate = null;
         this._onStop = null;
+        this._req = null;
         this.recording = null;
     }
 
@@ -57,28 +58,37 @@ export default class Client {
         this.recorder.stop(true);
     }
 
+    cancelUpload() {
+        if (this._req) {
+            this._req.abort();
+        }
+    }
+
     uploadRecording(channelId, userId, rootId) {
         if (!channelId) {
             return Promise.reject(new Error('channelId required'));
         }
 
         const filename = 'screenrec.mp4';
-        return request.
+        this._req = request.
             post(Client4.getFilesRoute()).
             set(Client4.getOptions({method: 'post'}).headers).
             attach('files', this.recording, filename).
             field('channel_id', channelId).
-            accept('application/json').then((res) => {
-                const fileId = res.body.file_infos[0].id;
-                return request.post(Client4.getPostsRoute()).
-                    set(Client4.getOptions({method: 'post'}).headers).
-                    send({
-                        channel_id: channelId,
-                        message: '',
-                        root_id: rootId,
-                        file_ids: [fileId],
-                    }).accept('application/json');
-            });
+            accept('application/json');
+
+        return this._req.then((res) => {
+            this._req = null;
+            const fileId = res.body.file_infos[0].id;
+            return request.post(Client4.getPostsRoute()).
+                set(Client4.getOptions({method: 'post'}).headers).
+                send({
+                    channel_id: channelId,
+                    message: '',
+                    root_id: rootId,
+                    file_ids: [fileId],
+                }).accept('application/json');
+        });
     }
 
     on(type, cb) {

@@ -34,6 +34,14 @@ export default class Root extends React.Component {
             recording: null,
             uploading: false,
         };
+
+        document.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Escape') {
+                if (this.state.uploading) {
+                    this.state.client.cancelUpload();
+                }
+            }
+        });
     }
 
     componentDidUpdate(prevProps) {
@@ -77,6 +85,10 @@ export default class Root extends React.Component {
       this.props.close();
   }
 
+  onCancelUpload = () => {
+      this.setState({uploading: false});
+  }
+
   onSend = async () => {
       this.setState({uploading: true});
       try {
@@ -105,6 +117,19 @@ export default class Root extends React.Component {
                           id='modal.uploading'
                           defaultMessage='Uploading...'
                       />
+
+                      <div>
+                          <button
+                              style={style.button}
+                              onClick={this.onCancelUpload}
+                              className='btn btn-danger'
+                          >
+                              <FormattedMessage
+                                  id='modal.cancel'
+                                  defaultMessage='Cancel'
+                              />
+                          </button>
+                      </div>
                   </div>
               </div>
           );
