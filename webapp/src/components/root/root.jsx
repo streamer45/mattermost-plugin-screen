@@ -79,7 +79,13 @@ export default class Root extends React.Component {
 
   onSend = async () => {
       this.setState({uploading: true});
-      await this.state.client.uploadRecording(this.props.channelId, this.props.userId, this.props.rootId);
+      try {
+          await this.state.client.uploadRecording(this.props.channelId, this.props.userId, this.props.rootId);
+      } catch (err) {
+          // TODO: add some informative error message to the dialog.
+          this.setState({uploading: false});
+          return;
+      }
       this.setState({uploading: false, recording: null});
       this.props.close();
   }
