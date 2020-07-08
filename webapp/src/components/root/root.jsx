@@ -33,6 +33,7 @@ export default class Root extends React.Component {
             client: new Client(),
             recording: null,
             uploading: false,
+            filename: 'screenrec.mp4',
         };
 
         document.addEventListener('keydown', (ev) => {
@@ -92,7 +93,7 @@ export default class Root extends React.Component {
   onSend = async () => {
       this.setState({uploading: true});
       try {
-          await this.state.client.uploadRecording(this.props.channelId, this.props.userId, this.props.rootId);
+          await this.state.client.uploadRecording(this.state.filename, this.props.channelId, this.props.userId, this.props.rootId);
       } catch (err) {
           // TODO: add some informative error message to the dialog.
           this.setState({uploading: false});
@@ -100,6 +101,10 @@ export default class Root extends React.Component {
       }
       this.setState({uploading: false, recording: null});
       this.props.close();
+  }
+
+  onFilenameChange = (ev) => {
+      this.setState({filename: ev.target.value});
   }
 
   render() {
@@ -117,7 +122,6 @@ export default class Root extends React.Component {
                           id='modal.uploading'
                           defaultMessage='Uploading...'
                       />
-
                       <div>
                           <button
                               style={style.button}
@@ -175,6 +179,19 @@ export default class Root extends React.Component {
                       controls='controls'
                       src={this.state.recording}
                   />
+                  <div style={style.input}>
+                      <label>
+                          <FormattedMessage
+                              id='modal.filename'
+                              defaultMessage='Filename'
+                          />
+                      </label>
+                      <input
+                          type='text'
+                          value={this.state.filename}
+                          onChange={this.onFilenameChange}
+                      />
+                  </div>
                   <div>
                       <button
                           onClick={this.onSend}
@@ -226,6 +243,11 @@ const getStyle = (theme) => ({
         color: theme.centerChannelColor,
 
         // border: `1px solid ${changeOpacity(theme.centerChannelColor, 0.1)}`,
+    },
+    input: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '0.5em',
     },
     button: {
         margin: '0.5em',

@@ -64,16 +64,22 @@ export default class Client {
         }
     }
 
-    uploadRecording(channelId, userId, rootId) {
+    uploadRecording(filename, channelId, userId, rootId) {
         if (!channelId) {
             return Promise.reject(new Error('channelId required'));
         }
 
-        const filename = 'screenrec.mp4';
+        let fname = filename;
+        if (fname.length <= 4) {
+            fname = 'screenrec.mp4';
+        } else if (fname.substr(fname.length - 4) !== '.mp4') {
+            fname += '.mp4';
+        }
+
         this._req = request.
             post(Client4.getFilesRoute()).
             set(Client4.getOptions({method: 'post'}).headers).
-            attach('files', this.recording, filename).
+            attach('files', this.recording, fname).
             field('channel_id', channelId).
             accept('application/json');
 
